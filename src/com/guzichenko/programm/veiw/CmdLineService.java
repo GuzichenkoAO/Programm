@@ -1,7 +1,9 @@
 package com.guzichenko.programm.veiw;
 
+import java.io.IOException;
+
 public interface CmdLineService {
 
-	void showMenu();
+	void runMenu() throws IOException;
 
 }
