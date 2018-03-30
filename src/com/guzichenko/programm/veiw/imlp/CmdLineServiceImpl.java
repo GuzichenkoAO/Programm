@@ -13,16 +13,14 @@ public class CmdLineServiceImpl implements CmdLineService {
 	private BufferedReader br =
 			new BufferedReader(new InputStreamReader(System.in));
 
-
 	public CmdLineServiceImpl(ContactService contactService) {
 		this.contactService = contactService;
 	}
 
-
 	@Override
 	public void runMenu() throws IOException {
-		boolean exit = true;
-		while (exit) {
+		boolean isRunning = true;
+		while (isRunning) {
 			showMenu();
 			String line = br.readLine();
 			switch (line) {
@@ -35,7 +33,7 @@ public class CmdLineServiceImpl implements CmdLineService {
 					break;
 				}
 				case "0": {
-					exit = false;
+					isRunning = false;
 					break;
 				}
 				default:
@@ -53,10 +51,9 @@ public class CmdLineServiceImpl implements CmdLineService {
 	private void createContact() throws IOException {
 		System.out.println("Enter name");
 		String name = br.readLine();
-		System.out.println("Enter phone");
-		String phone = br.readLine();
-		int phoneN = new Integer(phone);
-		this.contactService.creatContact(name, phoneN);
+		System.out.println("Enter age");
+		int age = Integer.parseInt(br.readLine());
+		this.contactService.createContact(name, age);
 	}
 
 	private void deleteContact() {

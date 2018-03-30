@@ -11,8 +11,8 @@ public class ContactServiceImpl implements ContactService {
 	private List<Contact> contactList = new ArrayList<>();
 
 	@Override
-	public void creatContact(String name, int phone) {
-		this.contactList.add(new Contact(name, phone));
+	public void createContact(String name, int age) {
+		this.contactList.add(new Contact(name, age));
 
 		for (Contact contact : this.contactList) {
 			System.out.println(contact);
