@@ -13,11 +13,9 @@ public class CmdLineServiceImpl implements CmdLineService {
 	private BufferedReader br =
 			new BufferedReader(new InputStreamReader(System.in));
 
-
 	public CmdLineServiceImpl(ContactService contactService) {
 		this.contactService = contactService;
 	}
-
 
 	@Override
 	public void runMenu() throws IOException {
@@ -34,6 +32,14 @@ public class CmdLineServiceImpl implements CmdLineService {
 					deleteContact();
 					break;
 				}
+				case "3": {
+					showContacts();
+					break;
+				}
+				case "4": {
+					editContact();
+					break;
+				}
 				case "0": {
 					exit = false;
 					break;
@@ -47,19 +53,57 @@ public class CmdLineServiceImpl implements CmdLineService {
 	private static void showMenu() {
 		System.out.println("1. Create Contact");
 		System.out.println("2. Delete Contact");
+		System.out.println("3. Show Contacts");
+		System.out.println("4. Edit Contact");
 		System.out.println("0. Exit");
 	}
 
 	private void createContact() throws IOException {
+
 		System.out.println("Enter name");
 		String name = br.readLine();
-		System.out.println("Enter phone");
-		String phone = br.readLine();
-		int phoneN = new Integer(phone);
-		this.contactService.creatContact(name, phoneN);
+		int ageN = readInt();
+
+		this.contactService.createContact(name, ageN);
 	}
 
-	private void deleteContact() {
-		System.out.println("Delete Contact");
+	private void deleteContact() throws IOException {
+		System.out.println("Enter name");
+		String name = br.readLine();
+		this.contactService.deleteContact(name);
+	}
+
+	private void showContacts() {
+		this.contactService.showContacts();
+	}
+
+	private void editContact() throws IOException {
+
+		System.out.println("Enter name of modified contact");
+		String name = br.readLine();
+
+		System.out.println("Enter name");
+		String newname = br.readLine();
+
+		System.out.println("Enter age of modified contact");
+		String age = br.readLine();
+		System.out.println("Enter age");
+		String newage = br.readLine();
+		int newa = new Integer(newage);
+		this.contactService.editContact(name, newname, newa);
+	}
+
+	private int readInt() throws IOException {
+		int i;
+		try {
+			System.out.println("Input number!");
+			String line = this.br.readLine();
+			i = new Integer(line);
+		}
+		catch (NumberFormatException ex) {
+			System.out.println("Wrong Input!");
+			return readInt();
+		}
+		return i;
 	}
 }
