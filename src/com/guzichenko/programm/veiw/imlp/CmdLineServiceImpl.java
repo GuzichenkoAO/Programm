@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.guzichenko.programm.services.ContactService;
+import com.guzichenko.programm.utils.ValidationUtil;
 import com.guzichenko.programm.veiw.CmdLineService;
 
 public class CmdLineServiceImpl implements CmdLineService {
@@ -98,7 +99,7 @@ public class CmdLineServiceImpl implements CmdLineService {
 		try {
 			System.out.println("Input number!");
 			String line = this.br.readLine();
-			i = new Integer(line);
+			i = ValidationUtil.checkNumber(line);
 		}
 		catch (NumberFormatException ex) {
 			System.out.println("Wrong Input!");
