@@ -1,39 +1,45 @@
 package com.guzichenko.programm.services.impl;
 
-import com.guzichenko.programm.dao.ContactDao;
-import com.guzichenko.programm.dao.impl.FileSystemContactDaoImpl;
 import com.guzichenko.programm.model.Contact;
 import com.guzichenko.programm.services.ContactService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ContactServiceImpl implements ContactService {
 
-	private final ContactDao contactDao;
+    /**
+     * Реализация ContactService которая использует Map для хранения данных.
+     */
 
-	public ContactServiceImpl(ContactDao contactDao) {
-		this.contactDao = contactDao;
-	}
+    private final Map<String, Contact> contactList;
 
-	@Override
-	public void createContact(String name, int phone) {
-		contactDao.saveContact(new Contact(name, phone));
-	}
 
-	@Override
-	public void deleteContact(String name) {
-//		this.contactList.remove(name);
-	}
+    public ContactServiceImpl() {
+        this.contactList = new HashMap<>();
+    }
 
-	@Override
-	public void showContacts() {
-		contactDao.showAll();
-//		for (Contact contact : this.contactList.values()) {
-//			System.out.println(contact);
-//		}
-	}
+    @Override
+    public void createContact(String name, int phone) {
+        contactList.put(name, new Contact(name, phone));
+    }
 
-	public void editContact(String name, String newName, int newAge) {
-//		Contact contact = this.contactList.get(name);
-//		contact.setName(newName);
-//		contact.setAge(newAge);
-	}
+    @Override
+    public void deleteContact(String name) {
+        contactList.remove(name);
+    }
+
+    @Override
+    public void showContacts() {
+        for (Contact contact : contactList.values()) {
+            System.out.println(contact);
+        }
+    }
+
+    @Override
+    public void editContact(String name, String newName, int newAge) {
+        Contact contact = contactList.get(name);
+        contact.setName(newName);
+        contact.setAge(newAge);
+    }
 }

@@ -1,110 +1,110 @@
 package com.guzichenko.programm.veiw.imlp;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import com.guzichenko.programm.services.ContactService;
 import com.guzichenko.programm.utils.ValidationUtil;
 import com.guzichenko.programm.veiw.CmdLineService;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class CmdLineServiceImpl implements CmdLineService {
 
-	private ContactService contactService;
-	private BufferedReader br =
-			new BufferedReader(new InputStreamReader(System.in));
+    /**
+     * Сервис реализующий логику предоставления и считывания информации в/из консоль.
+     */
 
-	public CmdLineServiceImpl(ContactService contactService) {
-		this.contactService = contactService;
-	}
+    private final ContactService contactService;
+    private final BufferedReader br;
 
-	@Override
-	public void runMenu() throws IOException {
-		boolean exit = true;
-		while (exit) {
-			showMenu();
-			String line = br.readLine();
-			switch (line) {
-				case "1": {
-					createContact();
-					break;
-				}
-				case "2": {
-					deleteContact();
-					break;
-				}
-				case "3": {
-					showContacts();
-					break;
-				}
-				case "4": {
-					editContact();
-					break;
-				}
-				case "0": {
-					exit = false;
-					break;
-				}
-				default:
-					System.out.println("Repeat");
-			}
-		}
-	}
+    public CmdLineServiceImpl(ContactService contactService) {
+        this.contactService = contactService;
+        this.br = new BufferedReader(new InputStreamReader(System.in));
+    }
 
-	private static void showMenu() {
-		System.out.println("1. Create Contact");
-		System.out.println("2. Delete Contact");
-		System.out.println("3. Show Contacts");
-		System.out.println("4. Edit Contact");
-		System.out.println("0. Exit");
-	}
+    @Override
+    public void runMenu() throws IOException {
+        boolean exit = true;
+        while (exit) {
+            showMenu();
+            String line = br.readLine();
+            switch (line) {
+                case "1": {
+                    createContact();
+                    break;
+                }
+                case "2": {
+                    deleteContact();
+                    break;
+                }
+                case "3": {
+                    showContacts();
+                    break;
+                }
+                case "4": {
+                    editContact();
+                    break;
+                }
+                case "0": {
+                    exit = false;
+                    break;
+                }
+                default:
+                    System.out.println("Repeat");
+            }
+        }
+    }
 
-	private void createContact() throws IOException {
+    private static void showMenu() {
+        System.out.println("1. Create Contact");
+        System.out.println("2. Delete Contact");
+        System.out.println("3. Show Contacts");
+        System.out.println("4. Edit Contact");
+        System.out.println("0. Exit");
+    }
 
-		System.out.println("Enter name");
-		String name = br.readLine();
-		int ageN = readInt();
+    private void createContact() throws IOException {
 
-		this.contactService.createContact(name, ageN);
-	}
+        System.out.println("Enter name");
+        String name = br.readLine();
 
-	private void deleteContact() throws IOException {
-		System.out.println("Enter name");
-		String name = br.readLine();
-		this.contactService.deleteContact(name);
-	}
+        System.out.println("Enter age");
+        int age = readInt();
+        contactService.createContact(name, age);
+    }
 
-	private void showContacts() {
-		this.contactService.showContacts();
-	}
+    private void deleteContact() throws IOException {
+        System.out.println("Enter contact name for remove");
+        String name = br.readLine();
 
-	private void editContact() throws IOException {
+        contactService.deleteContact(name);
+    }
 
-		System.out.println("Enter name of modified contact");
-		String name = br.readLine();
+    private void showContacts() {
+        contactService.showContacts();
+    }
 
-		System.out.println("Enter name");
-		String newname = br.readLine();
+    private void editContact() throws IOException {
 
-		System.out.println("Enter age of modified contact");
-		String age = br.readLine();
-		System.out.println("Enter age");
-		String newage = br.readLine();
-		int newa = new Integer(newage);
-		this.contactService.editContact(name, newname, newa);
-	}
+        System.out.println("Enter name of modified contact");
+        String name = br.readLine();
 
-	private int readInt() throws IOException {
-		int i;
-		try {
-			System.out.println("Input number!");
-			String line = this.br.readLine();
-			i = ValidationUtil.checkNumber(line);
-		}
-		catch (NumberFormatException ex) {
-			System.out.println("Wrong Input!");
-			return readInt();
-		}
-		return i;
-	}
+        System.out.println("Enter new name");
+        String newName = br.readLine();
+
+        System.out.println("Enter new age");
+        int newAge = readInt();
+
+        this.contactService.editContact(name, newName, newAge);
+    }
+
+    private int readInt() throws IOException {
+        try {
+            String line = br.readLine();
+            return ValidationUtil.checkNumber(line);
+        } catch (NumberFormatException ex) {
+            System.out.println("Wrong Input! You must input number");
+            return readInt();
+        }
+    }
 }

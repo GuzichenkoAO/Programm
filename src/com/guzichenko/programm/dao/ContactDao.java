@@ -1,14 +1,17 @@
 package com.guzichenko.programm.dao;
 
-import java.io.IOException;
-
 import com.guzichenko.programm.model.Contact;
 
 public interface ContactDao {
 
-	void saveContact(Contact contact);
+    /**
+     * Интерфейс описывающий основное поведение работы с различными вариантами долгострочного хранения данных.
+     * (файловая система, БД и т.д.)
+     */
 
-	void removeContact();
+    void saveContact(Contact contact);
 
-	void showAll();
+    void removeContact();
+
+    void showAll();
 }

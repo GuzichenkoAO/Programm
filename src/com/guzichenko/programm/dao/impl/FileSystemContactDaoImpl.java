@@ -1,61 +1,48 @@
 package com.guzichenko.programm.dao.impl;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-
 import com.guzichenko.programm.dao.ContactDao;
 import com.guzichenko.programm.model.Contact;
 
+import java.io.*;
+
 public class FileSystemContactDaoImpl implements ContactDao {
 
-	private static final File FILE = new File("data");
+    /**
+     * Сервис работы с файловой системой. Преобразует модели в/из данные хранимые на жестком диске.
+     */
 
-	private List<Contact> list;
+    private static final File FILE = new File("data");
 
-	public FileSystemContactDaoImpl() {
-	}
+    public FileSystemContactDaoImpl() {
+    }
 
-	private void init(){
+    //TODO исправить логику так, что бы файл не пересоздавался а дополнялся.
+    @Override
+    public void saveContact(Contact contact) {
+        try (PrintWriter writer = new PrintWriter(
+                new BufferedWriter(new FileWriter(FILE)))) {
+            writer.println(contact);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	}
+    @Override
+    public void removeContact() {
 
-	@Override
-	public void saveContact(Contact contact) {
-		try (PrintWriter writer = new PrintWriter(
-				new BufferedWriter(new FileWriter(FILE)))) {
-			writer.println(contact);
-			writer.flush();
-			writer.close();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    }
 
-	@Override
-	public void removeContact() {
+    @Override
+    public void showAll() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
 
-	}
-
-	@Override
-	public void showAll() {
-		try (BufferedReader reader = new BufferedReader(new FileReader(FILE))) {
-
-			while (true) {
-				String line = reader.readLine();
-				if (line == null) break;
-				System.out.println(line);
-			}
-
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
