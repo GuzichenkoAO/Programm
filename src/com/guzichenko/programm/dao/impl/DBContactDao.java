@@ -12,7 +12,8 @@ import com.guzichenko.programm.model.Contact;
 public class DBContactDao implements ContactDao {
 
 	private static final String DB_URL = "jdbc:h2:tcp://localhost/~/Program";
-	private int counter = 0;
+	private static final String USER = "Test";
+	private static final String PASSWORD = "";
 
 	public DBContactDao(){
 		try {
@@ -35,11 +36,10 @@ public class DBContactDao implements ContactDao {
 		try (Connection connection = DriverManager
 				.getConnection(DB_URL, "Test", "");
 				PreparedStatement st =
-						connection.prepareStatement("INSERT INTO CLIENT VALUES(?, ?, ?);")){
+						connection.prepareStatement("INSERT INTO CLIENT(NAME, AGE) VALUES(?, ?);")){
 
-			st.setInt(1, counter++);
-			st.setString(2, contact.getName());
-			st.setInt(3, contact.getAge());
+			st.setString(1, contact.getName());
+			st.setInt(2, contact.getAge());
 
 			st.execute();
 		} catch (SQLException e) {
