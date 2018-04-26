@@ -1,5 +1,9 @@
 package com.guzichenko.programm.services;
 
+import com.guzichenko.programm.model.Contact;
+
+import javafx.collections.ObservableList;
+
 public interface ContactService {
 
 	/**
@@ -10,7 +14,7 @@ public interface ContactService {
 
 	void deleteContact(String name);
 
-	void showContacts();
+	ObservableList<Contact> showContacts();
 
 	void editContact(String oldName, String newName, int newAge);
 

@@ -14,6 +14,7 @@ public class FSContactServiceImpl implements ContactService {
      */
 
     private final ContactDao contactDao;
+    ObservableList<Contact> list = FXCollections.observableArrayList();
 
     public FSContactServiceImpl(ContactDao contactDao) {
         this.contactDao = contactDao;
@@ -22,6 +23,7 @@ public class FSContactServiceImpl implements ContactService {
     @Override
     public void createContact(String name, int phone) {
         contactDao.saveContact(new Contact(name, phone));
+        showContacts();
     }
 
     @Override
@@ -30,8 +32,10 @@ public class FSContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void showContacts() {
-        contactDao.showAll();
+    public ObservableList<Contact> showContacts() {
+        list.clear();
+        list.addAll(contactDao.showAll());
+        return list;
     }
 
     public void editContact(String name, String newName, int newAge) {
