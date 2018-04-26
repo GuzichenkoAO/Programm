@@ -1,8 +1,8 @@
-package com.guzichenko.programm.veiw.imlp;
+package com.guzichenko.programm.view.imlp;
 
 import com.guzichenko.programm.services.ContactService;
 import com.guzichenko.programm.utils.ValidationUtil;
-import com.guzichenko.programm.veiw.CmdLineService;
+import com.guzichenko.programm.view.CmdLineService;
 
 import java.io.BufferedReader;
 import java.io.IOException;

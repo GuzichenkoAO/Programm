@@ -4,6 +4,8 @@ import com.guzichenko.programm.dao.ContactDao;
 import com.guzichenko.programm.model.Contact;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileSystemContactDaoImpl implements ContactDao {
 
@@ -34,15 +36,16 @@ public class FileSystemContactDaoImpl implements ContactDao {
     }
 
     @Override
-    public void showAll() {
+    public List<Contact> showAll() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
-
+            return new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 }

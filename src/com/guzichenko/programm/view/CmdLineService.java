@@ -1,4 +1,4 @@
-package com.guzichenko.programm.veiw;
+package com.guzichenko.programm.view;
 
 import java.io.IOException;
 

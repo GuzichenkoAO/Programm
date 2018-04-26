@@ -4,6 +4,9 @@ import com.guzichenko.programm.dao.ContactDao;
 import com.guzichenko.programm.model.Contact;
 import com.guzichenko.programm.services.ContactService;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class FSContactServiceImpl implements ContactService {
 
     /**
@@ -29,9 +32,6 @@ public class FSContactServiceImpl implements ContactService {
     @Override
     public void showContacts() {
         contactDao.showAll();
-//		for (Contact contact : this.contactList.values()) {
-//			System.out.println(contact);
-//		}
     }
 
     public void editContact(String name, String newName, int newAge) {
